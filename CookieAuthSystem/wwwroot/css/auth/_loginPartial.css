@@ -1,0 +1,11 @@
+.invisible-button {
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    font-size: inherit;
+    font-family: inherit;
+    cursor: pointer;
+    color: inherit;
+    outline: none;
+}
