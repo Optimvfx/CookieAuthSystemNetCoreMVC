@@ -8,9 +8,5 @@ public class UserContextConfiguration : IContextConfiguration<User>
     {
         builder.HasIndex(user => user.Nick);
         builder.HasIndex(user => user.Email);
-        
-        builder.HasMany(u => u.Tasks)
-            .WithOne(t => t.Author)
-            .HasForeignKey(t => t.AuthorId);
     }
 }

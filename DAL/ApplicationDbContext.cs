@@ -9,8 +9,6 @@ public class ApplicationDbContext : DbContext
 {
     public DbSet<User> Users => Set<User>();
     public DbSet<Role> Roles => Set<Role>();
-    public DbSet<TaskEntity> Tasks => Set<TaskEntity>();
-
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
@@ -18,7 +16,7 @@ public class ApplicationDbContext : DbContext
 
     public bool IsInitialized()
     {
-        return Users.Any() || Roles.Any() || Tasks.Any();
+        return Users.Any() || Roles.Any();
     }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)

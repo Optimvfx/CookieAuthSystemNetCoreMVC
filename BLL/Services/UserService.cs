@@ -5,7 +5,6 @@ using Common.Exceptions.User;
 using Common.Helpers;
 using DAL;
 using DAL.Entities;
-using DAL.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace BLL.Services;
@@ -34,22 +33,11 @@ public class UserService
     
     public async Task<User> GetUserById(Guid id)
     {
-        var user = await GetUsersById(id).FirstOrDefaultAsync();
+        var user = await _db.Users.FirstOrDefaultAsync(u => u.Id == id);
         if (user == null) throw new UserNotFoundException();
         return user;
     }
-    
-    public IQueryable<User> GetUsersById(Guid id)
-    {
-        return _db.Users.Where(u => u.Id == id);
-    }
 
-    public async Task<bool> AnyUserByCredentials(CredentialModel model)
-    {
-        var passwordHash = HashHelper.GetHash(model.Password);
-        return await _db.Users.AnyAsync(u => u.PasswordHash == passwordHash && u.Email == model.Email);
-    }
-    
     public async Task<User> GetUserByCredentials(CredentialModel model)
     {
         var passwordHash = HashHelper.GetHash(model.Password);
@@ -60,17 +48,21 @@ public class UserService
 
     public async Task<bool> CheckUserExistByNick(string nick)
     {
-        return await _db.Users.GetFirstOrDefaultByNickFilterAsync(nick) != null;
+        var user = await _db.Users.FirstOrDefaultAsync(u => u.Nick == nick);
+        return user != null;
     }
 
     public async Task<bool> CheckUserExistByEmail(string email)
     {
-        return await _db.Users.GetFirstOrDefaultByEmailFilterAsync(email) != null;
+        var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == email);
+        return user != null;
     }
 
-    public async Task<bool> CheckUserExistById(Guid id)
+    public async Task<User> GetUserByEmail(string email)
     {
-        return await _db.Users.AnyAsync(u => u.Id == id);
+        var user = await _db.Users.FirstOrDefaultAsync(x => x.Email == email);
+        if (user == null) throw new UserNotFoundException();
+        return user;
     }
 
     public async Task DeleteUser(Guid userId)
