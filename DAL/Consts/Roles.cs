@@ -9,7 +9,7 @@ public class Roles
     public static Role User => new Role()
     {
         Id = Guid.Parse(UserId),
-        Name = "User",
+        Title = "User",
         Users = new List<User>()
     };
 }

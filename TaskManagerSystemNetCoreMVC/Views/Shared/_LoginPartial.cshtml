@@ -1,0 +1,21 @@
+﻿@using System.Security.Principal
+@using Microsoft.Extensions.Options
+
+<ul class="navbar-nav">
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <li class="nav-item">
+            <span class="navbar-text text-dark">Hello @User.Identity?.Name!</span>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="Auth" asp-action="Logout" asp-route-returnUrl="/home/index">Sign out</a>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="Auth" asp-action="Login" asp-route-returnUrl="/home/index">Sign in</a>
+        </li>
+    }
+</ul>

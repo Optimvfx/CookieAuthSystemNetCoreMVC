@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using DAL.Entities.Configuration;
@@ -28,4 +29,7 @@ public class User
 
     [Required] 
     public virtual Role Role { get; set; } = null!;
+
+    [Required] 
+    public virtual ICollection<TaskEntity> Tasks { get; set; } = null!;
 }
